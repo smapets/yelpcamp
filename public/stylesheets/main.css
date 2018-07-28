@@ -1,0 +1,11 @@
+#delete-form {
+    display: inline;
+}
+
+.background_jumb{
+    background-color:#E7F59E;
+    background: linear-gradient(rgba(231, 245, 158, 0.5),
+                 rgba(128, 153, 174, 0.5)),
+                  no-repeat  fixed;
+    background-size:cover;
+}
