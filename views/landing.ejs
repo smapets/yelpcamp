@@ -26,10 +26,22 @@
     		<a href="/campgrounds" class="btn btn-lg btn-info">View All Campgrounds</a>
             <div>
                 <form action="/campgrounds" method="GET" class="form-inline justify-content-center">
-                        <div class="form-group col-auto">
-                            <input type="text" name="search" placeholder="campground search..." class="form-control">
-                            <input type="submit" value="Search" class="btn btn-secondary ml-2 ">
-            
+                        <div class="form-row align-items-center">
+                            <div class="col-auto my-1 ">
+                                <select name="category" class="custom-select">
+                                    <option value="">Choose by category...</option>
+                                    <option value="Off-Grid">Off-Grid</option>
+                                    <option value="Easy-access">Easy-Access</option>
+                                    <option value="With-view">With a view</option>
+                                    <option value="Family-Friendly">Family-Friendly</option>
+                                </select>
+                            </div>
+                            <div class="col-auto my-1">
+                                <input type="text" name="search" placeholder="campground search..." class="form-control">
+                            </div>
+                            <div class="col-auto my-1">
+                                <input type="submit" value="Search" class="btn btn-secondary ml-2 ">
+                            </div>
                         
                     </div>
                 </form>

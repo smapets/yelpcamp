@@ -19,13 +19,33 @@ var paramFn=function(req,res,next,id){
 });
 };
 
+var getCatFn=function(req,res,next){
+    var noMatch;
+    Campground.find({categories:req.params.category})
+    .then(function(allCampgrounds){
+            if(allCampgrounds.length<1){
+                noMatch="Not campgrounds of this category exist!!";
+            }
+            res.render("campgrounds/index",{campgrounds:allCampgrounds,noMatch:noMatch});
+            
+        })
+      .catch(function(err){
+        if(err){
+            req.flash("error","Not a valid query");
+            return res.redirect("/campgrounds");
+        }
+       });
+        
+};
+
 var getAllFn=function(req,res,next){
     var noMatch;
     // console.log(req.user);
-    if(req.query.search){
+    if(req.query.search || req.query.category){
          const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+         const category=req.query.category;
         //Get all campgrounds from db that match the query string
-         Campground.find({name:regex})
+         Campground.find({name:regex,categories:category})
         .then(function(allCampgrounds){
             if(allCampgrounds.length<1){
                 noMatch="No campgrounds match that query,please try again!!!";
@@ -60,6 +80,7 @@ var postFn= async function(req, res,next) {
             id: req.user._id,
             username: req.user.username
           };
+          req.body.campground.categories=req.body.categories;
          var campground=await Campground.create(req.body.campground);
          await res.redirect('/campgrounds/' + campground.id);
     }catch(err){
@@ -115,6 +136,7 @@ var putFn=async function(req,res,next){
             campground.name=req.body.campground.name;
             campground.description=req.body.campground.description;
             campground.price=req.body.campground.price;
+            campground.categories=req.body.categories;
             campground.save();
             req.flash("success","Successfully Updated!!");
             res.redirect("/campgrounds/"+req.params.id);
@@ -151,6 +173,7 @@ module.exports={
     postFn,
     renderNewFn,
     getOneFn,
+    getCatFn,
     renderEditFn,
     putFn,
     deleteFn,

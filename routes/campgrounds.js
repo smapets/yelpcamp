@@ -61,6 +61,10 @@ router.get("/new",middleware.isLoggedIn,controller.renderNewFn);
 // Show-- shows more info about one campground
 router.get("/:id",controller.getOneFn);
 
+//Show campgrounds of the same  category
+router.get("/categories/:category",controller.getCatFn);
+
+
 
 //Edit Campground Route
 router.get("/:id/edit",middleware.checkCampgroundOwnership,controller.renderEditFn);
